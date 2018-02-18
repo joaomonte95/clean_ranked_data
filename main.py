@@ -84,7 +84,7 @@ def main():
 
         print("Summoner's name: {name} | Summoner's level: {level}   \n".format(name=summoners_data['name'],level=summoners_data['summonerLevel']))
         print("Tier: {tier} {rank} {pdl} PDL   \n".format(tier=rank_data['data'][0]['tier'],rank=rank_data['data'][0]['rank'],pdl=rank_data['data'][0]['leaguePoints']))
-        print("All games ranked winrate: {}%    \n".format(rank_data['all_winrate']))
+        print("All ranked games winrate: {}%    \n".format(rank_data['all_winrate']))
         print("winrate on last {} ranked solo/duo games is {}%    \n".format(last_n_games, winrate))
 
         #exit condition

@@ -4,12 +4,12 @@ import requests
 
 def setup():
     global dev_key
-    dev_key = "" #your key goes here
+    dev_key = "RGAPI-4c5ca12c-6674-4fa0-8d48-8f045f9bd5cc"
     global region
     region = input('Select a region from the following: br1 | na1 | eun1 | euw1 | jp1 | kr | la1 | la2 | na1 | oc1 | tr1 | ru | pbe 1 \n')
     global common_path
     common_path = "https://{}.api.riotgames.com".format(region)
-
+    
 #setup ends
 
 #api functions
@@ -21,6 +21,7 @@ def get_summoner(summoners_name):
         if r.status_code == 404:
             print("Summoner not found. Try again! \n")
         else:
+            print(r.status_code)
             print("Please try again")
         summoners_name = input('Please enter sumoners name: \n')
         r = requests.get("{}/lol/summoner/v3/summoners/by-name/{}?api_key={}".format(common_path, summoners_name, dev_key))
@@ -40,7 +41,6 @@ def get_recent_winrate(summoners_name, last_n_games=6):
     sum_data = get_summoner(summoners_name)
     acc_id = sum_data['accountId']
     sum_id = sum_data['id']
-    data_ids = []
     match_data = []
     win_counter = 0
 
@@ -48,11 +48,9 @@ def get_recent_winrate(summoners_name, last_n_games=6):
     data_matches = r_matches.json()
 
     for i in range(last_n_games):
-        data_ids.append(data_matches['matches'][i]['gameId'])    
-    for id_ in data_ids:
-        r = requests.get("{}//lol/match/v3/matches/{}?api_key={}".format(common_path, id_, dev_key))
+        data_id = data_matches['matches'][i]['gameId']
+        r = requests.get("{}//lol/match/v3/matches/{}?api_key={}".format(common_path, data_id, dev_key))
         match_data.append(r.json())
-    for i in range(last_n_games):
         for j in range(10):
             if sum_id == match_data[i]['participantIdentities'][j]["player"]["summonerId"]:
                 participantId = match_data[i]['participantIdentities'][j]["participantId"]
@@ -74,12 +72,12 @@ def main():
         #input block
 
         summoners_name = input('Please enter a summoners name: \n')
-        last_n_games = int(input('Please select how much last ranked solo/duo games do you want to filter the win rates: \n'))
+        last_n_games = int(input('Please select how much last ranked solo/duo games do you want to filter the win rates: (limit = 100)\n'))
 
         #function calls block
 
         summoners_data = get_summoner(summoners_name)
-        rank_data = get_rank(summoners_name)    
+        rank_data = get_rank(summoners_name)
         winrate = get_recent_winrate(summoners_name, last_n_games)
 
         #output block

@@ -64,7 +64,7 @@ def get_recent_winrate(summoners_name, last_n_games=6):
 
 def main():
     exit_var = False
-    while exit_var == False:
+    while exit_var:
         #declaring global scope variables with setup
 
         setup()

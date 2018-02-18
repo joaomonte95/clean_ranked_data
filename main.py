@@ -4,7 +4,7 @@ import requests
 
 def setup():
     global dev_key
-    dev_key = "RGAPI-4c5ca12c-6674-4fa0-8d48-8f045f9bd5cc"
+    dev_key = ""
     global region
     region = input('Select a region from the following: br1 | na1 | eun1 | euw1 | jp1 | kr | la1 | la2 | na1 | oc1 | tr1 | ru | pbe 1 \n')
     global common_path

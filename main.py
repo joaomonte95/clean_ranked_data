@@ -90,6 +90,8 @@ def main():
         #exit condition
 
         if input('Type y + enter to exit, or press any other button + enter to continue \n') in 'yY':
+            exit_var = False
+        else:
             exit_var = True
 
 if __name__ == '__main__':
